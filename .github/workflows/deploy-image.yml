@@ -1,4 +1,4 @@
-name: Create and publish tamarin cli image
+name: Create and publish tamarin images
 
 on:
   push:
