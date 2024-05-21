@@ -3,8 +3,8 @@
 ## Using CLI
 
 ```bash
-docker pull ghcr.io/luojiazhishu/tamarin-docker/ssh:latest
-docker run --rm -it -p 3301:3301 -v $pwd:/root ghcr.io/luojiazhishu/tamarin-docker/ssh:latest /bin/bash
+docker pull ghcr.io/luojiazhishu/tamarin-docker/cli:latest
+docker run --rm -it -p 3301:3301 -v $pwd:/root ghcr.io/luojiazhishu/tamarin-docker/cli:latest /bin/bash
 ```
 ## Using SSH
 ```bash
