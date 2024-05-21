@@ -1,0 +1,46 @@
+name: Create and publish tamarin cli image
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  push_to_registries:
+    name: Push Docker image to multiple registries
+    runs-on: ubuntu-latest
+    permissions:
+      packages: write
+      contents: read
+      attestations: write
+    steps:
+      - name: Check out the repo
+        uses: actions/checkout@v4
+
+      - name: Log in to the Container registry
+        uses: docker/login-action@65b78e6e13532edd9afa3aa52ac7964289d1a9c1
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Run download.sh script
+        run: bash download.sh
+
+      - name: Extract version from tag
+        id: extract_tag
+        run: echo "VERSION=${GITHUB_REF#refs/tags/}" >> $GITHUB_ENV
+
+      - name: Build and push Docker image
+        run: |
+          docker build -t ghcr.io/${{ github.repository }}/cli:${{ env.VERSION }} \
+                      -t ghcr.io/${{ github.repository }}/cli:latest \
+                      -f Dockerfile-cli .
+          docker push ghcr.io/${{ github.repository }}/cli:${{ env.VERSION }}
+          docker push ghcr.io/${{ github.repository }}/cli:latest
+
+          docker build -t ghcr.io/${{ github.repository }}/ssh:${{ env.VERSION }} \
+                      -t ghcr.io/${{ github.repository }}/ssh:latest \
+                      -f Dockerfile-ssh .
+          docker push ghcr.io/${{ github.repository }}/ssh:${{ env.VERSION }}
+          docker push ghcr.io/${{ github.repository }}/ssh:latest
