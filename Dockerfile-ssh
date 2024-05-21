@@ -29,3 +29,7 @@ WORKDIR /root
 
 # Start SSH service
 CMD ["/usr/sbin/sshd", "-D"]
+
+# Set the locale
+ENV LC_ALL=C.UTF-8
+ENV LANG=C.UTF-8

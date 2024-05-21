@@ -14,3 +14,6 @@ RUN rm -rf /var/cache/apt/* /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 WORKDIR /root
 
+# Set the locale
+ENV LC_ALL=C.UTF-8
+ENV LANG=C.UTF-8
