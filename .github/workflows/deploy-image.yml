@@ -25,7 +25,7 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Run download.sh script
-        run: bash download.sh
+        run: bash scripts/download.sh
 
       - name: Extract version from tag
         id: extract_tag
